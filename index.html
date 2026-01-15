@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EthioFly - Travel & Flight Info</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <script src="https://kit.fontawesome.com/yourkit.js" crossorigin="anonymous"></script>
+    <style>
+        /* RESET */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Roboto', sans-serif; line-height: 1.6; background: #f5f5f5; color: #333; }
+        a { text-decoration: none; color: inherit; }
+
+        /* HEADER / NAVBAR */
+        header { background: #0077c2; padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .logo { display: flex; align-items: center; gap: 10px; color: #fff; }
+        .logo img { height: 50px; }
+        .logo h1 { font-size: 1.6rem; font-weight: 700; }
+        nav ul { display: flex; gap: 20px; list-style: none; }
+        nav ul li a { color: #fff; font-weight: 500; padding: 5px 10px; transition: background 0.3s, color 0.3s; border-radius: 5px; }
+        nav ul li a:hover { background: #fff; color: #0077c2; }
+
+        /* PAGE SECTIONS */
+        .page-section { padding: 80px 20px; max-width: 1000px; margin: 0 auto; background: #fff; margin-bottom: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .page-section h1 { margin-bottom: 20px; color: #0077c2; }
+        .page-section p { margin-bottom: 15px; }
+        .page-section ul { margin-left: 20px; margin-bottom: 15px; }
+
+        /* BUTTONS */
+        .btn { display: inline-flex; align-items: center; gap: 5px; background: #0077c2; color: #fff; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; font-weight: 500; transition: background 0.3s; }
+        .btn:hover { background: #005fa3; }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            nav ul { flex-direction: column; background: #0077c2; position: absolute; top: 70px; right: 20px; padding: 10px; display: none; border-radius: 5px; }
+            nav ul.show { display: flex; }
+            .menu-toggle { display: block; cursor: pointer; font-size: 1.5rem; color: #fff; }
+        }
+        @media (min-width: 769px) {
+            .menu-toggle { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <a href="#about-page" class="logo" data-page="flights">
+            <img src="https://i.postimg.cc/L6sR9Bvr/20260110-010256.png" alt="Ethiofly Logo" class="logo-img">
+            <h1>Ethiofly</h1>
+        </a>
+        <nav>
+            <div class="menu-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
+            <ul id="nav-links">
+                <li><a href="#about-page">About</a></li>
+                <li><a href="#contact-page">Contact</a></li>
+                <li><a href="#faq-page">FAQ</a></li>
+                <li><a href="#privacy-policy-page">Privacy Policy</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- ABOUT -->
+    <section id="about-page" class="page-section"> 
+        <h1>About Us – EthioFly</h1>
+        <p><strong>ETHIOFLY</strong> is a professionally developed travel and flight information website proudly owned and operated in Ethiopia.</p>
+        <p>Our mission is to simplify air travel for Ethiopian and international travelers by providing reliable, transparent, and up-to-date travel information in one convenient platform.</p>
+        <p>EthioFly was founded by <strong>Khalid Abdi Aydid</strong> with the vision of creating a locally owned digital travel solution that meets international standards.</p>
+        <p>The platform was designed and developed by <strong>Team Ali Abdi Abib</strong>, a skilled development team dedicated to building secure, fast, and user-friendly web solutions.</p>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact-page" class="page-section">
+        <h1>Contact & Support</h1>
+        <p>If you need assistance, you may contact us through:</p>
+        <ul>
+            <li><strong>General Support:</strong> info@ethiofly.com</li>
+            <li><strong>Management:</strong> khalidabdiaydid@gmail.com</li>
+        </ul>
+        <h3>Phone Contacts</h3>
+        <ul>
+            <li>Eng. Khalid: +251 919 012 120</li>
+            <li>Eng. Faysal: +251 912 038 618</li>
+        </ul>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq-page" class="page-section">
+        <h1>Frequently Asked Questions (FAQ)</h1>
+        <h3>What is EthioFly?</h3>
+        <p>EthioFly is a trusted flight comparison and travel platform designed for Ethiopian travelers.</p>
+        <h3>Does EthioFly sell flight tickets?</h3>
+        <p>No. EthioFly does not currently sell tickets directly. Our booking and payment system is under development.</p>
+        <h3>Is EthioFly free to use?</h3>
+        <p>Yes. EthioFly is completely free for all users.</p>
+        <h3>How does EthioFly make money?</h3>
+        <ul>
+            <li>Advertising (Google Ads)</li>
+            <li>Affiliate partnerships</li>
+            <li>Sponsored travel deals</li>
+        </ul>
+        <h3>Is my personal information safe?</h3>
+        <p>Yes. Please review our Privacy Policy for full details.</p>
+    </section>
+
+    <!-- PRIVACY POLICY -->
+    <section id="privacy-policy-page" class="page-section">
+        <h1>🔐 Privacy Policy – EthioFly</h1>
+        <p><strong>Last Updated:</strong> January 2026</p>
+        <h3>1. Ownership & Management</h3>
+        <p>The website <strong>https://ethiofly.com</strong> is owned and managed by:<br>
+            Developer’s Manager: Ali Abdi Abib<br>
+            Investor: Faysal Abdi Warsame<br>
+            Manager & Founder: Khalid Abdi Aydid
+        </p>
+        <h3>2. Age Restriction</h3>
+        <p>EthioFly is not intended for use by individuals under the age of 15.</p>
+        <h3>3. Information We Collect</h3>
+        <ul>
+            <li>Personal details (name, email, phone number)</li>
+            <li>Travel searches and preferences</li>
+            <li>Device & technical data (IP, browser)</li>
+            <li>Cookies and analytics data</li>
+        </ul>
+        <h3>4. How We Use Your Information</h3>
+        <ul>
+            <li>Provide and improve our services</li>
+            <li>Customer support & communication</li>
+            <li>Analytics, SEO, and security</li>
+            <li>Advertising (Google Ads)</li>
+        </ul>
+        <h3>5. Cookies & Advertising</h3>
+        <p>We use cookies, Google Analytics, and Google AdSense to improve user experience and display relevant ads.</p>
+        <h3>6. Data Protection</h3>
+        <p>We apply industry-standard security measures, but no system is 100% secure.</p>
+        <h3>7. User Rights</h3>
+        <ul>
+            <li>Access your data</li>
+            <li>Request correction or deletion</li>
+            <li>Opt out of marketing</li>
+        </ul>
+        <h3>8. Contact</h3>
+        <p>For any questions, please contact us through the Contact Us page.</p>
+        <button class="btn" onclick="scrollToTop()"><i class="fas fa-arrow-up"></i> Back to Top</button>
+    </section>
+
+    <script>
+        // SMOOTH SCROLL
+        document.querySelectorAll('nav ul li a, .logo').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // MOBILE MENU
+        function toggleMenu() {
+            document.getElementById('nav-links').classList.toggle('show');
+        }
+
+        // BACK TO TOP
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+          </html>
