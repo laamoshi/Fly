@@ -177,18 +177,72 @@ nav ul li a:hover { background:#fff; color:#0077c2; }
 </section>
 
 <script>
-// Show only one section at a time
+// ==============================
+// Show Section + smooth scroll
+// ==============================
 function showSection(sectionId){
-    document.querySelectorAll('.page-section').forEach(sec=>sec.classList.remove('active'));
-    document.getElementById(sectionId).classList.add('active');
-    document.getElementById('nav-links').classList.remove('show'); // close mobile menu
+    document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
+    const target = document.getElementById(sectionId);
+    if(target){
+        target.classList.add('active');
+        target.scrollIntoView({behavior:'smooth', block:'start'});
+    }
+    document.getElementById('nav-links')?.classList.remove('show');
 }
 
+// ==============================
+// Handle footer & header links
+// ==============================
+function handleLinkClick(event, sectionId) {
+    const currentDomain = window.location.hostname;
+    const targetDomain = "company.ethiofly.com";
+
+    if(currentDomain !== targetDomain) {
+        // User is on main site -> redirect to subdomain
+        window.location.href = `https://${targetDomain}/#${sectionId}`;
+    } else {
+        // User is on subdomain -> show section
+        event.preventDefault();
+        showSection(sectionId);
+    }
+}
+
+// ==============================
+// Attach event to header links
+// ==============================
+document.querySelectorAll('nav ul li a').forEach(link => {
+    link.addEventListener('click', e => {
+        const sectionId = link.getAttribute('href').substring(1);
+        handleLinkClick(e, sectionId);
+    });
+});
+
+// ==============================
+// Attach event to footer links
+// ==============================
+document.querySelectorAll('.footer-link').forEach(link => {
+    link.addEventListener('click', e => {
+        const sectionId = link.getAttribute('href').substring(1);
+        handleLinkClick(e, sectionId);
+    });
+});
+
+// ==============================
 // Mobile menu toggle
+// ==============================
 function toggleMenu(){
     document.getElementById('nav-links').classList.toggle('show');
 }
-</script>
 
+// ==============================
+// On page load, check hash and show section
+// ==============================
+window.addEventListener('DOMContentLoaded', () => {
+    const hash = window.location.hash.substring(1); // remove #
+    if(hash){
+        showSection(hash);
+    }
+});
+</script>
 </body>
 </html>
