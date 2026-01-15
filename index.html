@@ -1,171 +1,194 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EthioFly - Travel & Flight Info</title>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome for icons -->
-    <script src="https://kit.fontawesome.com/yourkit.js" crossorigin="anonymous"></script>
-    <style>
-        /* RESET */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Roboto', sans-serif; line-height: 1.6; background: #f5f5f5; color: #333; }
-        a { text-decoration: none; color: inherit; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EthioFly – Single Page</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="https://kit.fontawesome.com/yourkit.js" crossorigin="anonymous"></script>
+<style>
+/* RESET */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Roboto', sans-serif; background: #f5f5f5; color: #333; line-height: 1.6; }
+a { text-decoration: none; color: inherit; }
 
-        /* HEADER / NAVBAR */
-        header { background: #0077c2; padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .logo { display: flex; align-items: center; gap: 10px; color: #fff; }
-        .logo img { height: 50px; }
-        .logo h1 { font-size: 1.6rem; font-weight: 700; }
-        nav ul { display: flex; gap: 20px; list-style: none; }
-        nav ul li a { color: #fff; font-weight: 500; padding: 5px 10px; transition: background 0.3s, color 0.3s; border-radius: 5px; }
-        nav ul li a:hover { background: #fff; color: #0077c2; }
+/* HEADER */
+header { background: #0077c2; padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 1000; }
+.logo { display: flex; align-items: center; gap: 10px; color: #fff; cursor: pointer; }
+.logo img { height: 50px; }
+.logo h1 { font-size: 1.6rem; font-weight: 700; }
+nav ul { display: flex; gap: 15px; list-style: none; }
+nav ul li a { color: #fff; font-weight: 500; padding: 5px 10px; border-radius: 5px; transition: 0.3s; }
+nav ul li a:hover { background: #fff; color: #0077c2; }
 
-        /* PAGE SECTIONS */
-        .page-section { padding: 80px 20px; max-width: 1000px; margin: 0 auto; background: #fff; margin-bottom: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-        .page-section h1 { margin-bottom: 20px; color: #0077c2; }
-        .page-section p { margin-bottom: 15px; }
-        .page-section ul { margin-left: 20px; margin-bottom: 15px; }
+/* SECTIONS */
+.page-section { display: none; padding: 50px 20px; max-width: 900px; margin: 30px auto; background: #fff; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+.page-section.active { display: block; }
+.page-section h1 { color: #0077c2; margin-bottom: 20px; }
+.page-section h3 { margin-top: 15px; color: #005fa3; }
+.page-section p, .page-section ul { margin-bottom: 15px; }
+.page-section ul { padding-left: 20px; }
 
-        /* BUTTONS */
-        .btn { display: inline-flex; align-items: center; gap: 5px; background: #0077c2; color: #fff; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; font-weight: 500; transition: background 0.3s; }
-        .btn:hover { background: #005fa3; }
+/* BUTTONS */
+.btn { display: inline-flex; align-items: center; gap: 5px; background: #0077c2; color: #fff; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; font-weight: 500; }
+.btn:hover { background: #005fa3; }
 
-        /* RESPONSIVE */
-        @media (max-width: 768px) {
-            nav ul { flex-direction: column; background: #0077c2; position: absolute; top: 70px; right: 20px; padding: 10px; display: none; border-radius: 5px; }
-            nav ul.show { display: flex; }
-            .menu-toggle { display: block; cursor: pointer; font-size: 1.5rem; color: #fff; }
-        }
-        @media (min-width: 769px) {
-            .menu-toggle { display: none; }
-        }
-    </style>
+/* RESPONSIVE */
+@media (max-width:768px){
+    nav ul { flex-direction: column; display:none; position:absolute; top:70px; right:20px; background:#0077c2; padding:10px; border-radius:5px;}
+    nav ul.show{display:flex;}
+    .menu-toggle{display:block; font-size:1.5rem; color:#fff; cursor:pointer;}
+}
+@media (min-width:769px){ .menu-toggle{display:none;} }
+</style>
 </head>
 <body>
 
-    <!-- HEADER -->
-    <header>
-        <a href="#about-page" class="logo" data-page="flights">
-            <img src="https://i.postimg.cc/L6sR9Bvr/20260110-010256.png" alt="Ethiofly Logo" class="logo-img">
-            <h1>Ethiofly</h1>
-        </a>
-        <nav>
-            <div class="menu-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
-            <ul id="nav-links">
-                <li><a href="#about-page">About</a></li>
-                <li><a href="#contact-page">Contact</a></li>
-                <li><a href="#faq-page">FAQ</a></li>
-                <li><a href="#privacy-policy-page">Privacy Policy</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <!-- ABOUT -->
-    <section id="about-page" class="page-section"> 
-        <h1>About Us – EthioFly</h1>
-        <p><strong>ETHIOFLY</strong> is a professionally developed travel and flight information website proudly owned and operated in Ethiopia.</p>
-        <p>Our mission is to simplify air travel for Ethiopian and international travelers by providing reliable, transparent, and up-to-date travel information in one convenient platform.</p>
-        <p>EthioFly was founded by <strong>Khalid Abdi Aydid</strong> with the vision of creating a locally owned digital travel solution that meets international standards.</p>
-        <p>The platform was designed and developed by <strong>Team Ali Abdi Abib</strong>, a skilled development team dedicated to building secure, fast, and user-friendly web solutions.</p>
-    </section>
-
-    <!-- CONTACT -->
-    <section id="contact-page" class="page-section">
-        <h1>Contact & Support</h1>
-        <p>If you need assistance, you may contact us through:</p>
-        <ul>
-            <li><strong>General Support:</strong> info@ethiofly.com</li>
-            <li><strong>Management:</strong> khalidabdiaydid@gmail.com</li>
+<header>
+    <div class="logo" onclick="showSection('about-page')">
+        <img src="https://i.postimg.cc/L6sR9Bvr/20260110-010256.png" alt="Ethiofly Logo">
+        <h1>Ethiofly</h1>
+    </div>
+    <nav>
+        <div class="menu-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
+        <ul id="nav-links">
+            <li><a href="#" onclick="showSection('about-page')">About</a></li>
+            <li><a href="#" onclick="showSection('contact-page')">Contact</a></li>
+            <li><a href="#" onclick="showSection('faq-page')">FAQ</a></li>
+            <li><a href="#" onclick="showSection('tos-page')">Terms of Service</a></li>
+            <li><a href="#" onclick="showSection('privacy-page')">Privacy Policy</a></li>
         </ul>
-        <h3>Phone Contacts</h3>
-        <ul>
-            <li>Eng. Khalid: +251 919 012 120</li>
-            <li>Eng. Faysal: +251 912 038 618</li>
-        </ul>
-    </section>
+    </nav>
+</header>
 
-    <!-- FAQ -->
-    <section id="faq-page" class="page-section">
-        <h1>Frequently Asked Questions (FAQ)</h1>
-        <h3>What is EthioFly?</h3>
-        <p>EthioFly is a trusted flight comparison and travel platform designed for Ethiopian travelers.</p>
-        <h3>Does EthioFly sell flight tickets?</h3>
-        <p>No. EthioFly does not currently sell tickets directly. Our booking and payment system is under development.</p>
-        <h3>Is EthioFly free to use?</h3>
-        <p>Yes. EthioFly is completely free for all users.</p>
-        <h3>How does EthioFly make money?</h3>
-        <ul>
-            <li>Advertising (Google Ads)</li>
-            <li>Affiliate partnerships</li>
-            <li>Sponsored travel deals</li>
-        </ul>
-        <h3>Is my personal information safe?</h3>
-        <p>Yes. Please review our Privacy Policy for full details.</p>
-    </section>
+<!-- ABOUT -->
+<section id="about-page" class="page-section active">
+    <h1>About Us – EthioFly</h1>
+    <p><strong>ETHIOFLY</strong> is a professionally developed travel and flight information website proudly owned and operated in Ethiopia. Our mission is to simplify air travel for Ethiopian and international travelers by providing reliable, transparent, and up-to-date flight and travel information in one convenient platform.</p>
+    <p>EthioFly was founded by <strong>KHALID ABDI AYDID</strong>, with the vision of creating a locally owned digital travel solution that meets international standards while serving the real needs of travelers. The platform was designed and developed by <strong>Team ALI ABDI ABIB</strong>, a skilled development team dedicated to building secure, fast, and user-friendly web solutions.</p>
+    <p>We are continuously improving EthioFly to offer better features, smarter tools, and a smoother user experience. Our goal is to become a trusted name in travel technology by focusing on accuracy, innovation, and customer satisfaction.</p>
+</section>
 
-    <!-- PRIVACY POLICY -->
-    <section id="privacy-policy-page" class="page-section">
-        <h1>🔐 Privacy Policy – EthioFly</h1>
-        <p><strong>Last Updated:</strong> January 2026</p>
-        <h3>1. Ownership & Management</h3>
-        <p>The website <strong>https://ethiofly.com</strong> is owned and managed by:<br>
-            Developer’s Manager: Ali Abdi Abib<br>
-            Investor: Faysal Abdi Warsame<br>
-            Manager & Founder: Khalid Abdi Aydid
-        </p>
-        <h3>2. Age Restriction</h3>
-        <p>EthioFly is not intended for use by individuals under the age of 15.</p>
-        <h3>3. Information We Collect</h3>
-        <ul>
-            <li>Personal details (name, email, phone number)</li>
-            <li>Travel searches and preferences</li>
-            <li>Device & technical data (IP, browser)</li>
-            <li>Cookies and analytics data</li>
-        </ul>
-        <h3>4. How We Use Your Information</h3>
-        <ul>
-            <li>Provide and improve our services</li>
-            <li>Customer support & communication</li>
-            <li>Analytics, SEO, and security</li>
-            <li>Advertising (Google Ads)</li>
-        </ul>
-        <h3>5. Cookies & Advertising</h3>
-        <p>We use cookies, Google Analytics, and Google AdSense to improve user experience and display relevant ads.</p>
-        <h3>6. Data Protection</h3>
-        <p>We apply industry-standard security measures, but no system is 100% secure.</p>
-        <h3>7. User Rights</h3>
-        <ul>
-            <li>Access your data</li>
-            <li>Request correction or deletion</li>
-            <li>Opt out of marketing</li>
-        </ul>
-        <h3>8. Contact</h3>
-        <p>For any questions, please contact us through the Contact Us page.</p>
-        <button class="btn" onclick="scrollToTop()"><i class="fas fa-arrow-up"></i> Back to Top</button>
-    </section>
+<!-- CONTACT -->
+<section id="contact-page" class="page-section">
+    <h1>Contact & Support</h1>
+    <p>If you experience any issues or need assistance with any part of our website, you can contact us through the following channels:</p>
+    <ul>
+        <li><strong>General Support Email:</strong> info@ethiofly.com</li>
+        <li><strong>Management Email:</strong> khalidabdiaydid@gmail.com</li>
+    </ul>
+    <h3>Phone Contacts:</h3>
+    <ul>
+        <li>Eng. Khalid: +251 919 012 120</li>
+        <li>Eng. Faysal: +251 912 038 618</li>
+    </ul>
+    <p>📲 For immediate assistance or inquiries, you may contact us via WhatsApp using the number above.</p>
+</section>
 
-    <script>
-        // SMOOTH SCROLL
-        document.querySelectorAll('nav ul li a, .logo').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href').substring(1);
-                document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
-            });
-        });
+<!-- FAQ -->
+<section id="faq-page" class="page-section">
+    <h1>Frequently Asked Questions (FAQ)</h1>
+    <h3>What is EthioFly?</h3>
+    <p>EthioFly is a trusted flight comparison and travel platform designed for Ethiopian travelers. We help users compare flights, hotels, travel packages, and deals from reliable third-party providers so they can make informed travel decisions.</p>
+    <h3>Does EthioFly sell flight tickets?</h3>
+    <p>Currently, EthioFly does not sell flight tickets directly. Our ticket booking and payment system is under development.</p>
+    <h3>Is EthioFly free to use?</h3>
+    <p>Yes. EthioFly is completely free for all users. There are no registration or comparison fees.</p>
+    <h3>Are the prices shown on EthioFly accurate?</h3>
+    <p>Prices are provided by third-party airlines, hotels, and booking partners. While we strive to display the most up-to-date information, prices and availability may change at any time depending on the provider.</p>
+    <h3>How does EthioFly make money?</h3>
+    <ul>
+        <li>Advertising (such as Google Ads)</li>
+        <li>Affiliate partnerships with airlines, hotels, and travel providers</li>
+        <li>Sponsored travel deals</li>
+    </ul>
+    <h3>Can I book hotels and travel packages?</h3>
+    <p>Yes. EthioFly allows users to compare hotels and travel packages and then redirects them to trusted third-party providers to complete the booking.</p>
+    <h3>Is my personal information safe?</h3>
+    <p>Yes. Protecting your privacy is very important to us. EthioFly follows strict data protection and security standards. For more details, please review our Privacy Policy.</p>
+    <h3>How can I contact EthioFly?</h3>
+    <ul>
+        <li>Email: info@ethiofly.com</li>
+        <li>Phone / WhatsApp: +251919012120</li>
+    </ul>
+</section>
 
-        // MOBILE MENU
-        function toggleMenu() {
-            document.getElementById('nav-links').classList.toggle('show');
-        }
+<!-- TERMS OF SERVICE -->
+<section id="tos-page" class="page-section">
+    <h1>📜 Terms of Service – EthioFly</h1>
+    <p><strong>Last Updated:</strong> January 2026</p>
+    <h3>1. Service Description</h3>
+    <p>EthioFly is a travel comparison platform. We do not directly sell flights or hotels. Prices and availability are provided by third-party providers.</p>
+    <h3>2. User Responsibilities</h3>
+    <p>Users agree to use the website lawfully, provide accurate information, and not misuse, scrape, or exploit the platform.</p>
+    <h3>3. Third-Party Links</h3>
+    <p>EthioFly may link to external websites. We are not responsible for their content, pricing, or policies.</p>
+    <h3>4. Intellectual Property</h3>
+    <p>All website content, branding, and design belong to EthioFly and may not be copied without permission.</p>
+    <h3>5. Disclaimer</h3>
+    <p>EthioFly does not guarantee prices, availability, or uninterrupted service. Travel decisions are made at the user’s own risk.</p>
+    <h3>6. Limitation of Liability</h3>
+    <p>EthioFly shall not be liable for any indirect or consequential damages related to travel bookings.</p>
+    <h3>7. Changes to Terms</h3>
+    <p>We reserve the right to update these Terms at any time.</p>
+    <h3>8. Contact</h3>
+    <p>Email: info@ethiofly.com</p>
+</section>
 
-        // BACK TO TOP
-        function scrollToTop() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-    </script>
+<!-- PRIVACY POLICY -->
+<section id="privacy-page" class="page-section">
+    <h1>🔐 Privacy Policy – EthioFly</h1>
+    <p><strong>Last Updated:</strong> January 2026</p>
+    <h3>1. Ownership & Management</h3>
+    <p>The website https://ethiofly.com/ is owned and managed by Developer’s Manager: Ali Abdi Abib, Investor: Faysal Abdi Warsame, Manager & Founder: Khalid Abdi Aydid.</p>
+    <h3>2. Age Restriction</h3>
+    <p>Not intended for individuals under 15 years old.</p>
+    <h3>3. Information We Collect</h3>
+    <ul>
+        <li>Personal details (name, email, phone)</li>
+        <li>Contact form submissions</li>
+        <li>Travel searches and usage data</li>
+        <li>Device & technical data</li>
+        <li>Cookies and analytics data</li>
+    </ul>
+    <h3>4. How We Collect Information</h3>
+    <p>Through forms, communication, cookies, tracking technologies, and analytics.</p>
+    <h3>5. How We Use Your Information</h3>
+    <p>To provide, improve, personalize services, communicate offers, improve performance, and comply with legal obligations.</p>
+    <h3>6. Cookies & Tracking</h3>
+    <p>We use cookies for UX, traffic analysis, SEO, and ads. Users can control or disable cookies via browser settings.</p>
+    <h3>7. Third-Party Services</h3>
+    <p>We may use Google Ads, Analytics, and affiliate partners.</p>
+    <h3>8. Data Sharing</h3>
+    <p>We do not sell personal information. Only shared with trusted partners or legal authorities when required.</p>
+    <h3>9. Data Protection & Security</h3>
+    <p>Secure servers, encryption, controlled access. No system is 100% secure.</p>
+    <h3>10. Prohibited Use</h3>
+    <p>Illegal, fraudulent, pornographic, or immoral activities are prohibited.</p>
+    <h3>11. User Responsibilities</h3>
+    <p>Provide accurate info, follow rules and laws.</p>
+    <h3>12. User Rights</h3>
+    <p>Access, correct, delete data, opt-out of marketing.</p>
+    <h3>13. Policy Updates</h3>
+    <p>We may update the Privacy Policy anytime; updates published on this page.</p>
+    <h3>14. Limitation of Liability</h3>
+    <p>We are not liable for damages from unauthorized or improper use.</p>
+    <h3>15. Contact Information</h3>
+    <p>Email: info@ethiofly.com</p>
+</section>
+
+<script>
+// Show only one section at a time
+function showSection(sectionId) {
+    document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
+    document.getElementById(sectionId).classList.add('active');
+    document.getElementById('nav-links').classList.remove('show'); // close mobile menu
+}
+
+// Mobile menu toggle
+function toggleMenu() {
+    document.getElementById('nav-links').classList.toggle('show');
+}
+</script>
 </body>
-          </html>
+</html>
