@@ -7,39 +7,38 @@
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 <script src="https://kit.fontawesome.com/yourkit.js" crossorigin="anonymous"></script>
 <style>
-/* RESET */
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Roboto', sans-serif; background: #f5f5f5; color: #333; line-height: 1.6; }
-a { text-decoration: none; color: inherit; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Roboto', sans-serif; background:#f5f5f5; color:#333; line-height:1.6; }
+a { text-decoration:none; color:inherit; }
 
 /* HEADER */
-header { background: #0077c2; padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 1000; }
-.logo { display: flex; align-items: center; gap: 10px; color: #fff; cursor: pointer; }
-.logo img { height: 50px; }
-.logo h1 { font-size: 1.6rem; font-weight: 700; }
-nav ul { display: flex; gap: 15px; list-style: none; }
-nav ul li a { color: #fff; font-weight: 500; padding: 5px 10px; border-radius: 5px; transition: 0.3s; }
-nav ul li a:hover { background: #fff; color: #0077c2; }
+header { background:#0077c2; padding:15px 20px; display:flex; justify-content:space-between; align-items:center; position:sticky; top:0; z-index:1000; }
+.logo { display:flex; align-items:center; gap:10px; color:#fff; cursor:pointer; }
+.logo img { height:50px; }
+.logo h1 { font-size:1.6rem; font-weight:700; }
+nav ul { display:flex; gap:15px; list-style:none; }
+nav ul li a { color:#fff; font-weight:500; padding:5px 10px; border-radius:5px; transition:0.3s; }
+nav ul li a:hover { background:#fff; color:#0077c2; }
 
 /* SECTIONS */
-.page-section { display: none; padding: 50px 20px; max-width: 900px; margin: 30px auto; background: #fff; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-.page-section.active { display: block; }
-.page-section h1 { color: #0077c2; margin-bottom: 20px; }
-.page-section h3 { margin-top: 15px; color: #005fa3; }
-.page-section p, .page-section ul { margin-bottom: 15px; }
-.page-section ul { padding-left: 20px; }
+.page-section { display:none; padding:50px 20px; max-width:900px; margin:30px auto; background:#fff; border-radius:10px; box-shadow:0 2px 10px rgba(0,0,0,0.05); }
+.page-section.active { display:block; }
+.page-section h1 { color:#0077c2; margin-bottom:20px; }
+.page-section h3 { margin-top:15px; color:#005fa3; }
+.page-section p, .page-section ul { margin-bottom:15px; }
+.page-section ul { padding-left:20px; }
 
 /* BUTTONS */
-.btn { display: inline-flex; align-items: center; gap: 5px; background: #0077c2; color: #fff; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; font-weight: 500; }
-.btn:hover { background: #005fa3; }
+.btn { display:inline-flex; align-items:center; gap:5px; background:#0077c2; color:#fff; border:none; padding:10px 15px; border-radius:5px; cursor:pointer; font-weight:500; }
+.btn:hover { background:#005fa3; }
 
-/* RESPONSIVE */
-@media (max-width:768px){
-    nav ul { flex-direction: column; display:none; position:absolute; top:70px; right:20px; background:#0077c2; padding:10px; border-radius:5px;}
-    nav ul.show{display:flex;}
-    .menu-toggle{display:block; font-size:1.5rem; color:#fff; cursor:pointer;}
+/* MOBILE MENU */
+@media(max-width:768px){
+    nav ul { flex-direction:column; display:none; position:absolute; top:70px; right:20px; background:#0077c2; padding:10px; border-radius:5px; width:160px;}
+    nav ul.show { display:flex; }
+    .menu-toggle { display:block; font-size:1.5rem; color:#fff; cursor:pointer; }
 }
-@media (min-width:769px){ .menu-toggle{display:none;} }
+@media(min-width:769px){ .menu-toggle { display:none; } }
 </style>
 </head>
 <body>
@@ -52,11 +51,11 @@ nav ul li a:hover { background: #fff; color: #0077c2; }
     <nav>
         <div class="menu-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
         <ul id="nav-links">
-            <li><a href="#" onclick="showSection('about-page')">About</a></li>
-            <li><a href="#" onclick="showSection('contact-page')">Contact</a></li>
-            <li><a href="#" onclick="showSection('faq-page')">FAQ</a></li>
-            <li><a href="#" onclick="showSection('tos-page')">Terms of Service</a></li>
-            <li><a href="#" onclick="showSection('privacy-page')">Privacy Policy</a></li>
+            <li><a href="#" onclick="showSection('about-page'); return false;">About</a></li>
+            <li><a href="#" onclick="showSection('contact-page'); return false;">Contact</a></li>
+            <li><a href="#" onclick="showSection('faq-page'); return false;">FAQ</a></li>
+            <li><a href="#" onclick="showSection('tos-page'); return false;">Terms of Service</a></li>
+            <li><a href="#" onclick="showSection('privacy-page'); return false;">Privacy Policy</a></li>
         </ul>
     </nav>
 </header>
@@ -179,16 +178,17 @@ nav ul li a:hover { background: #fff; color: #0077c2; }
 
 <script>
 // Show only one section at a time
-function showSection(sectionId) {
-    document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
+function showSection(sectionId){
+    document.querySelectorAll('.page-section').forEach(sec=>sec.classList.remove('active'));
     document.getElementById(sectionId).classList.add('active');
     document.getElementById('nav-links').classList.remove('show'); // close mobile menu
 }
 
 // Mobile menu toggle
-function toggleMenu() {
+function toggleMenu(){
     document.getElementById('nav-links').classList.toggle('show');
 }
 </script>
+
 </body>
 </html>
