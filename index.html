@@ -13,9 +13,33 @@ a { text-decoration:none; color:inherit; }
 
 /* HEADER */
 header { background:#0077c2; padding:15px 20px; display:flex; justify-content:space-between; align-items:center; position:sticky; top:0; z-index:1000; }
-.logo { display:flex; align-items:center; gap:10px; color:#fff; cursor:pointer; }
-.logo img { height:50px; }
-.logo h1 { font-size:1.6rem; font-weight:700; }
+.logo { 
+    display:flex; 
+    align-items:center; 
+    gap:10px; 
+    color:#fff; 
+    cursor:pointer; 
+}
+
+/* LOGO IMAGE → KUBBAD + SPIN */
+.logo img { 
+    height:50px; 
+    width:50px;              /* si uu u noqdo square */
+    border-radius:50%;      /* kubbad */
+    object-fit:cover;       /* si image-ka u buuxiyo */
+    animation: spinLogo 6s linear infinite; /* wareeg */
+}
+
+/* ANIMATION */
+@keyframes spinLogo {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.logo h1 { 
+    font-size:1.6rem; 
+    font-weight:700; 
+}
 nav ul { display:flex; gap:15px; list-style:none; }
 nav ul li a { color:#fff; font-weight:500; padding:5px 10px; border-radius:5px; transition:0.3s; }
 nav ul li a:hover { background:#fff; color:#0077c2; }
