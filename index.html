@@ -153,12 +153,12 @@ nav ul li a:hover { background:#fff; color:#0077c2; }
 </div>
 
 <ul id="nav-links">
-    <li><a href="javascript:void(0)" onclick="navigateTo('about')">About</a></li>
-    <li><a href="javascript:void(0)" onclick="navigateTo('contact')">Contact</a></li>
-    <li><a href="javascript:void(0)" onclick="navigateTo('faq')">FAQ</a></li>
-    <li><a href="javascript:void(0)" onclick="navigateTo('terms')">Terms of Service</a></li>
-    <li><a href="javascript:void(0)" onclick="navigateTo('privacy')">Privacy Policy</a></li>
-     <li><a href="javascript:void(0)" onclick="navigateTo('refund')">refund Policy</a></li>
+    <li><a href="javascript:void(0)" onclick="navigateTo('about-page')">About</a></li>
+    <li><a href="javascript:void(0)" onclick="navigateTo('contact-page')">Contact</a></li>
+    <li><a href="javascript:void(0)" onclick="navigateTo('faq-page')">FAQ</a></li>
+    <li><a href="javascript:void(0)" onclick="navigateTo('terms-page')">Terms</a></li>
+    <li><a href="javascript:void(0)" onclick="navigateTo('privacy-page')">Privacy</a></li>
+    <li><a href="javascript:void(0)" onclick="navigateTo('refund-page')">Refund</a></li>
 </ul>
 </nav> 
 </header>]
@@ -631,40 +631,35 @@ function showSection(sectionId){
     document.getElementById('nav-links')?.classList.remove('show');
 }
 
-/* ==============================
-   MAIN NAVIGATION SYSTEM (FIXED)
-============================== */
-function navigateTo(section) {
+function navigateTo(sectionId) {
 
     const currentDomain = window.location.hostname;
     const targetDomain = "company.ethiofly.com";
 
     if(currentDomain !== targetDomain) {
-        window.location.href = `https://${targetDomain}/#${section}`;
+        window.location.href = `https://${targetDomain}/#${sectionId}`;
     } else {
-        showSection(section); // 👈 NO "-page" ADDITION
-        history.pushState(null, "", "/" + section);
+        showSection(sectionId);
+        history.pushState(null, "", "/" + sectionId);
     }
 }
-/* ==============================
-   MOBILE MENU TOGGLE
-============================== */
+
 function toggleMenu(){
     document.getElementById('nav-links').classList.toggle('show');
 }
 
-/* ==============================
-   PAGE LOAD HANDLER (IMPORTANT)
-============================== */
 window.addEventListener('DOMContentLoaded', () => {
-    const path = window.location.pathname.replace("/", "");
+    const hash = window.location.hash.substring(1);
 
-    if(path){
-        showSection(path);
+    if(hash){
+        showSection(hash);
     } else {
-        showSection("about"); // default page
+        showSection("about-page");
     }
 });
+
+
+
 window.addEventListener('DOMContentLoaded', () => {
     const savedPath = sessionStorage.getItem("redirectPath");
 
