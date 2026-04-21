@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>EthioFly</title>
+</head>
+<body>
+
+<script>
+  // Redirect all unknown routes to index.html SPA
+  const path = window.location.pathname;
+
+  if (path !== "/") {
+    sessionStorage.setItem("redirectPath", path);
+  }
+
+  window.location.replace("/");
+</script>
+
+</body>
+</html>
