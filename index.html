@@ -612,9 +612,10 @@ nav ul li a:hover { background:#fff; color:#0077c2; }
   </p>
 
 </section>
-
-
 <script>
+/* ==============================
+   SHOW SECTION (CORE)
+============================== */
 function showSection(sectionId){
     document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
 
@@ -626,9 +627,11 @@ function showSection(sectionId){
     }
 }
 
-/* MAIN ROUTING SYSTEM */
+/* ==============================
+   ROUTER (URL -> SECTION)
+============================== */
 function route(){
-    let path = window.location.pathname.replace("/", "").replace("/", "");
+    let path = window.location.pathname.replace(/\/+/g, "").trim();
 
     if(path === "" || path === "index.html"){
         showSection("about");
@@ -638,7 +641,9 @@ function route(){
     showSection(path);
 }
 
-/* NAV CLICK HANDLER */
+/* ==============================
+   NAV LINK HANDLER (/about, /contact)
+============================== */
 document.querySelectorAll("a[href^='/']").forEach(link => {
     link.addEventListener("click", function(e){
         e.preventDefault();
@@ -650,13 +655,39 @@ document.querySelectorAll("a[href^='/']").forEach(link => {
     });
 });
 
-/* PAGE LOAD */
+/* ==============================
+   OPTIONAL: NAVIGATION FUNCTION
+   (if you use onclick="navigateTo()")
+============================== */
+function navigateTo(sectionId){
+    const targetDomain = "company.ethiofly.com";
+    const currentDomain = window.location.hostname;
+
+    if(currentDomain !== targetDomain){
+        window.location.href = `https://${targetDomain}/${sectionId}`;
+    } else {
+        window.history.pushState({}, "", "/" + sectionId);
+        showSection(sectionId);
+    }
+}
+
+/* ==============================
+   MOBILE MENU
+============================== */
+function toggleMenu(){
+    document.getElementById('nav-links')?.classList.toggle('show');
+}
+
+/* ==============================
+   INITIAL LOAD
+============================== */
 window.addEventListener("DOMContentLoaded", route);
 
-/* BACK BUTTON FIX */
+/* ==============================
+   BACK / FORWARD BUTTON SUPPORT
+============================== */
 window.addEventListener("popstate", route);
-
-
+</script>
 </script>
 </body>
 </html>
