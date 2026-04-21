@@ -7,14 +7,16 @@
 <body>
 
 <script>
-  // Redirect all unknown routes to index.html SPA
+  // Save full path
   const path = window.location.pathname;
 
-  if (path !== "/") {
+  if (path && path !== "/") {
     sessionStorage.setItem("redirectPath", path);
   }
 
-  window.location.replace("/");
+  // IMPORTANT: preserve base path safely
+  const base = window.location.origin;
+  window.location.replace(base + "/");
 </script>
 
 </body>
