@@ -665,7 +665,18 @@ window.addEventListener('DOMContentLoaded', () => {
         showSection("about"); // default page
     }
 });
+window.addEventListener('DOMContentLoaded', () => {
+    const savedPath = sessionStorage.getItem("redirectPath");
 
+    if(savedPath){
+        const clean = savedPath.replace("/", "");
+        showSection(clean);
+        sessionStorage.removeItem("redirectPath");
+        return;
+    }
+
+    showSection("about");
+});
 /* ==============================
    OPTIONAL: BACK BUTTON SUPPORT
 ============================== */
