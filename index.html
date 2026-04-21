@@ -150,13 +150,13 @@ nav ul li a:hover { background:#fff; color:#0077c2; }
   <nav>
     
         <div class="menu-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
-        <ul id="nav-links">
-            <li><a href="#" onclick="showSection('about-page'); return false;">About</a></li>
-            <li><a href="#" onclick="showSection('contact-page'); return false;">Contact</a></li>
-            <li><a href="#" onclick="showSection('faq-page'); return false;">FAQ</a></li>
-            <li><a href="#" onclick="showSection('tos-page'); return false;">Terms of Service</a></li>
-            <li><a href="#" onclick="showSection('privacy-page'); return false;">Privacy Policy</a></li>
-        </ul>
+       <ul id="nav-links">
+    <li><a href="/about">About</a></li>
+    <li><a href="/contact">Contact</a></li>
+    <li><a href="/faq">FAQ</a></li>
+    <li><a href="/terms">Terms of Service</a></li>
+    <li><a href="/privacy">Privacy Policy</a></li>
+</ul>
     </nav>
 </header>
 
@@ -615,14 +615,18 @@ nav ul li a:hover { background:#fff; color:#0077c2; }
 // ==============================
 // Show Section + smooth scroll
 // ==============================
-function showSection(sectionId){
-    document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
-    const target = document.getElementById(sectionId);
-    if(target){
-        target.classList.add('active');
-        target.scrollIntoView({behavior:'smooth', block:'start'});
+function navigateTo(sectionId) {
+    const currentDomain = window.location.hostname;
+    const targetDomain = "company.ethiofly.com";
+
+    if (currentDomain !== targetDomain) {
+        // ka yimid main site
+        window.location.href = `https://${targetDomain}/${sectionId}`;
+    } else {
+        // gudaha company site
+        showSection(sectionId + "-page");
+        history.pushState(null, "", "/" + sectionId);
     }
-    document.getElementById('nav-links')?.classList.remove('show');
 }
 
 // ==============================
@@ -647,8 +651,9 @@ function handleLinkClick(event, sectionId) {
 // ==============================
 document.querySelectorAll('nav ul li a').forEach(link => {
     link.addEventListener('click', e => {
-        const sectionId = link.getAttribute('href').substring(1);
-        handleLinkClick(e, sectionId);
+        e.preventDefault();
+        const path = link.getAttribute('href').replace("/", "");
+        navigateTo(path);
     });
 });
 
@@ -673,9 +678,12 @@ function toggleMenu(){
 // On page load, check hash and show section
 // ==============================
 window.addEventListener('DOMContentLoaded', () => {
-    const hash = window.location.hash.substring(1); // remove #
-    if(hash){
-        showSection(hash);
+    const path = window.location.pathname.replace("/", "");
+
+    if (path) {
+        showSection(path + "-page");
+    } else {
+        showSection("about-page"); // default
     }
 });
 </script>
