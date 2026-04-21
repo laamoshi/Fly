@@ -148,17 +148,17 @@ nav ul li a:hover { background:#fff; color:#0077c2; }
     <h1>Ethiofly</h1>
   </div>
   <nav>
-    <div class="menu-toggle" onclick="toggleMenu()">
+  <div class="menu-toggle" onclick="toggleMenu()">
     <i class="fas fa-bars"></i>
 </div>
 
 <ul id="nav-links">
-    <li><a href="javascript:void(0)" onclick="navigateTo('about-page')">About</a></li>
-    <li><a href="javascript:void(0)" onclick="navigateTo('contact-page')">Contact</a></li>
-    <li><a href="javascript:void(0)" onclick="navigateTo('faq-page')">FAQ</a></li>
-    <li><a href="javascript:void(0)" onclick="navigateTo('terms-page')">Terms</a></li>
-    <li><a href="javascript:void(0)" onclick="navigateTo('privacy-page')">Privacy</a></li>
-    <li><a href="javascript:void(0)" onclick="navigateTo('refund-page')">Refund</a></li>
+    <li><a href="javascript:void(0)" onclick="navigateTo('about')">About</a></li>
+    <li><a href="javascript:void(0)" onclick="navigateTo('contact')">Contact</a></li>
+    <li><a href="javascript:void(0)" onclick="navigateTo('faq')">FAQ</a></li>
+    <li><a href="javascript:void(0)" onclick="navigateTo('terms')">Terms of Service</a></li>
+    <li><a href="javascript:void(0)" onclick="navigateTo('privacy')">Privacy Policy</a></li>
+     <li><a href="javascript:void(0)" onclick="navigateTo('refund-page')">Refund</a></li>
 </ul>
 </nav> 
 </header>]
@@ -621,8 +621,7 @@ nav ul li a:hover { background:#fff; color:#0077c2; }
 function showSection(sectionId){
     document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
 
-    const target = document.getElementById(sectionId);
-
+    const target = document.getElementById(sectionId + "-page");
     if(target){
         target.classList.add('active');
         target.scrollIntoView({behavior:'smooth', block:'start'});
@@ -631,47 +630,43 @@ function showSection(sectionId){
     document.getElementById('nav-links')?.classList.remove('show');
 }
 
-function navigateTo(sectionId) {
-
+/* ==============================
+   MAIN NAVIGATION SYSTEM (FIXED)
+============================== */
+function navigateTo(section) {
     const currentDomain = window.location.hostname;
     const targetDomain = "company.ethiofly.com";
 
     if(currentDomain !== targetDomain) {
-        window.location.href = `https://${targetDomain}/#${sectionId}`;
+        // MAIN SITE → redirect to subdomain clean URL
+        window.location.href = `https://${targetDomain}/${section}`;
     } else {
-        showSection(sectionId);
-        history.pushState(null, "", "/" + sectionId);
+        // SUBDOMAIN → SPA behavior
+        showSection(section);
+        history.pushState(null, "", "/" + section);
     }
 }
 
+/* ==============================
+   MOBILE MENU TOGGLE
+============================== */
 function toggleMenu(){
     document.getElementById('nav-links').classList.toggle('show');
 }
 
+/* ==============================
+   PAGE LOAD HANDLER (IMPORTANT)
+============================== */
 window.addEventListener('DOMContentLoaded', () => {
-    const hash = window.location.hash.substring(1);
+    const path = window.location.pathname.replace("/", "");
 
-    if(hash){
-        showSection(hash);
+    if(path){
+        showSection(path);
     } else {
-        showSection("about-page");
+        showSection("about"); // default page
     }
 });
 
-
-
-window.addEventListener('DOMContentLoaded', () => {
-    const savedPath = sessionStorage.getItem("redirectPath");
-
-    if(savedPath){
-        const clean = savedPath.replace("/", "");
-        showSection(clean);
-        sessionStorage.removeItem("redirectPath");
-        return;
-    }
-
-    showSection("about");
-});
 /* ==============================
    OPTIONAL: BACK BUTTON SUPPORT
 ============================== */
