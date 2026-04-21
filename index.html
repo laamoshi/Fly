@@ -613,21 +613,28 @@ nav ul li a:hover { background:#fff; color:#0077c2; }
 
 </section>
 <script>
-function showSection(sectionId){
-    document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
+/* =========================
+   SHOW SECTION
+========================= */
+function showSection(page){
+    document.querySelectorAll('.page-section')
+        .forEach(sec => sec.classList.remove('active'));
 
-    const target = document.getElementById(sectionId + "-page");
+    const target = document.getElementById(page + "-page");
 
     if(target){
         target.classList.add('active');
-        target.scrollIntoView({behavior:'smooth', block:'start'});
+        target.scrollIntoView({behavior:"smooth"});
     }
 }
 
-/* ROUTER */
+/* =========================
+   ROUTER (URL → PAGE)
+========================= */
 function route(){
     let path = window.location.pathname.replace(/^\/+|\/+$/g, "");
 
+    // default page
     if(path === "" || path === "index.html"){
         showSection("about");
         return;
@@ -636,27 +643,50 @@ function route(){
     showSection(path);
 }
 
-/* CLICK HANDLER */
-document.querySelectorAll("a[href^='/']").forEach(link => {
-    link.addEventListener("click", function(e){
-        e.preventDefault();
+/* =========================
+   CLICK LINKS (IMPORTANT FIX)
+========================= */
+document.addEventListener("click", function(e){
 
-        let path = this.getAttribute("href").replace("/", "");
+    const link = e.target.closest("a[href^='/']");
 
-        window.history.pushState({}, "", "/" + path);
-        showSection(path);
-    });
+    if(!link) return;
+
+    e.preventDefault();
+
+    let path = link.getAttribute("href")
+        .replace(/^\/+|\/+$/g, "");
+
+    // update URL without reload
+    window.history.pushState({}, "", "/" + path);
+
+    showSection(path);
 });
 
-/* INIT */
+/* =========================
+   INIT PAGE LOAD
+========================= */
 window.addEventListener("DOMContentLoaded", route);
 
-/* BACK BUTTON */
+/* =========================
+   BACK BUTTON FIX
+========================= */
 window.addEventListener("popstate", route);
 
-/* MOBILE MENU */
+/* =========================
+   MOBILE MENU
+========================= */
 function toggleMenu(){
-    document.getElementById('nav-links').classList.toggle('show');
+    document.getElementById('nav-links')
+        .classList.toggle('show');
+}
+
+/* =========================
+   LOGO CLICK → HOME
+========================= */
+function goHome(){
+    window.history.pushState({}, "", "/");
+    showSection("about");
 }
 </script>
 </body>
