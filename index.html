@@ -621,7 +621,8 @@ nav ul li a:hover { background:#fff; color:#0077c2; }
 function showSection(sectionId){
     document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
 
-    const target = document.getElementById(sectionId + "-page");
+    const target = document.getElementById(sectionId);
+
     if(target){
         target.classList.add('active');
         target.scrollIntoView({behavior:'smooth', block:'start'});
@@ -635,22 +636,16 @@ function showSection(sectionId){
 ============================== */
 function navigateTo(section) {
 
-    // fix mapping issue
-    if(section === "refund"){
-        section = "refund-policy";
-    }
-
     const currentDomain = window.location.hostname;
     const targetDomain = "company.ethiofly.com";
 
     if(currentDomain !== targetDomain) {
-        window.location.href = `https://${targetDomain}/${section}`;
+        window.location.href = `https://${targetDomain}/#${section}`;
     } else {
-        showSection(section);
+        showSection(section); // 👈 NO "-page" ADDITION
         history.pushState(null, "", "/" + section);
     }
 }
-
 /* ==============================
    MOBILE MENU TOGGLE
 ============================== */
