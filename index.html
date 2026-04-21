@@ -634,14 +634,18 @@ function showSection(sectionId){
    MAIN NAVIGATION SYSTEM (FIXED)
 ============================== */
 function navigateTo(section) {
+
+    // fix mapping issue
+    if(section === "refund"){
+        section = "refund-policy";
+    }
+
     const currentDomain = window.location.hostname;
     const targetDomain = "company.ethiofly.com";
 
     if(currentDomain !== targetDomain) {
-        // MAIN SITE → redirect to subdomain clean URL
         window.location.href = `https://${targetDomain}/${section}`;
     } else {
-        // SUBDOMAIN → SPA behavior
         showSection(section);
         history.pushState(null, "", "/" + section);
     }
