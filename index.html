@@ -148,17 +148,19 @@ nav ul li a:hover { background:#fff; color:#0077c2; }
     <h1>Ethiofly</h1>
   </div>
   <nav>
-    
-        <div class="menu-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
-       <ul id="nav-links">
-    <li><a href="/about">About</a></li>
-    <li><a href="/contact">Contact</a></li>
-    <li><a href="/faq">FAQ</a></li>
-    <li><a href="/terms">Terms of Service</a></li>
-    <li><a href="/privacy">Privacy Policy</a></li>
+    <div class="menu-toggle" onclick="toggleMenu()">
+    <i class="fas fa-bars"></i>
+</div>
+
+<ul id="nav-links">
+    <li><a href="javascript:void(0)" onclick="navigateTo('about')">About</a></li>
+    <li><a href="javascript:void(0)" onclick="navigateTo('contact')">Contact</a></li>
+    <li><a href="javascript:void(0)" onclick="navigateTo('faq')">FAQ</a></li>
+    <li><a href="javascript:void(0)" onclick="navigateTo('terms')">Terms of Service</a></li>
+    <li><a href="javascript:void(0)" onclick="navigateTo('privacy')">Privacy Policy</a></li>
 </ul>
-    </nav>
-</header>
+</nav> 
+</header>]
 
 
 <!-- ABOUT -->
@@ -612,79 +614,64 @@ nav ul li a:hover { background:#fff; color:#0077c2; }
 
 
 <script>
-// ==============================
-// Show Section + smooth scroll
-// ==============================
-function navigateTo(sectionId) {
-    const currentDomain = window.location.hostname;
-    const targetDomain = "company.ethiofly.com";
+/* ==============================
+   SHOW SECTION (SPA CORE)
+============================== */
+function showSection(sectionId){
+    document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
 
-    if (currentDomain !== targetDomain) {
-        // ka yimid main site
-        window.location.href = `https://${targetDomain}/${sectionId}`;
-    } else {
-        // gudaha company site
-        showSection(sectionId + "-page");
-        history.pushState(null, "", "/" + sectionId);
+    const target = document.getElementById(sectionId + "-page");
+    if(target){
+        target.classList.add('active');
+        target.scrollIntoView({behavior:'smooth', block:'start'});
     }
+
+    document.getElementById('nav-links')?.classList.remove('show');
 }
 
-// ==============================
-// Handle footer & header links
-// ==============================
-function handleLinkClick(event, sectionId) {
+/* ==============================
+   MAIN NAVIGATION SYSTEM (FIXED)
+============================== */
+function navigateTo(section) {
     const currentDomain = window.location.hostname;
     const targetDomain = "company.ethiofly.com";
 
     if(currentDomain !== targetDomain) {
-        // User is on main site -> redirect to subdomain
-        window.location.href = `https://${targetDomain}/#${sectionId}`;
+        // MAIN SITE → redirect to subdomain clean URL
+        window.location.href = `https://${targetDomain}/${section}`;
     } else {
-        // User is on subdomain -> show section
-        event.preventDefault();
-        showSection(sectionId);
+        // SUBDOMAIN → SPA behavior
+        showSection(section);
+        history.pushState(null, "", "/" + section);
     }
 }
 
-// ==============================
-// Attach event to header links
-// ==============================
-document.querySelectorAll('nav ul li a').forEach(link => {
-    link.addEventListener('click', e => {
-        e.preventDefault();
-        const path = link.getAttribute('href').replace("/", "");
-        navigateTo(path);
-    });
-});
-
-// ==============================
-// Attach event to footer links
-// ==============================
-document.querySelectorAll('.footer-link').forEach(link => {
-    link.addEventListener('click', e => {
-        const sectionId = link.getAttribute('href').substring(1);
-        handleLinkClick(e, sectionId);
-    });
-});
-
-// ==============================
-// Mobile menu toggle
-// ==============================
+/* ==============================
+   MOBILE MENU TOGGLE
+============================== */
 function toggleMenu(){
     document.getElementById('nav-links').classList.toggle('show');
 }
 
-// ==============================
-// On page load, check hash and show section
-// ==============================
+/* ==============================
+   PAGE LOAD HANDLER (IMPORTANT)
+============================== */
 window.addEventListener('DOMContentLoaded', () => {
     const path = window.location.pathname.replace("/", "");
 
-    if (path) {
-        showSection(path + "-page");
+    if(path){
+        showSection(path);
     } else {
-        showSection("about-page"); // default
+        showSection("about"); // default page
     }
+});
+
+/* ==============================
+   OPTIONAL: BACK BUTTON SUPPORT
+============================== */
+window.addEventListener("popstate", () => {
+    const path = window.location.pathname.replace("/", "");
+    showSection(path || "about");
 });
 </script>
 </body>
