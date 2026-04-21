@@ -636,15 +636,12 @@ function navigateTo(section) {
     const targetDomain = "company.ethiofly.com";
 
     if (currentDomain !== targetDomain) {
-        // MAIN SITE → redirect
         window.location.href = `https://${targetDomain}/${section}`;
     } else {
-        // SUBDOMAIN → SPA behavior
         showSection(section);
         history.pushState(null, "", "/" + section);
     }
 }
-
 // ==============================
 // PAGE LOAD (IMPORTANT FIX)
 // ==============================
