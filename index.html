@@ -148,17 +148,17 @@ nav ul li a:hover { background:#fff; color:#0077c2; }
     <h1>Ethiofly</h1>
   </div>
   <nav>
-    <div class="menu-toggle" onclick="toggleMenu()">
+ <div class="menu-toggle" onclick="toggleMenu()">
     <i class="fas fa-bars"></i>
 </div>
 
 <ul id="nav-links">
-    <li><a href="javascript:void(0)" onclick="navigateTo('about')">About</a></li>
-    <li><a href="javascript:void(0)" onclick="navigateTo('contact')">Contact</a></li>
-    <li><a href="javascript:void(0)" onclick="navigateTo('faq')">FAQ</a></li>
-    <li><a href="javascript:void(0)" onclick="navigateTo('terms')">Terms</a></li>
-    <li><a href="javascript:void(0)" onclick="navigateTo('privacy')">Privacy</a></li>
-    <li><a href="javascript:void(0)" onclick="navigateTo('refund')">Refund</a></li>
+    <li><a href="/about">About</a></li>
+    <li><a href="/contact">Contact</a></li>
+    <li><a href="/faq">FAQ</a></li>
+    <li><a href="/terms">Terms</a></li>
+    <li><a href="/privacy">Privacy</a></li>
+    <li><a href="/refund">Refund</a></li>
 </ul>
 </nav> 
 </header>]
@@ -613,9 +613,6 @@ nav ul li a:hover { background:#fff; color:#0077c2; }
 
 </section>
 <script>
-/* ==============================
-   SHOW SECTION
-============================== */
 function showSection(sectionId){
     document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
 
@@ -627,70 +624,40 @@ function showSection(sectionId){
     }
 }
 
-/* ==============================
-   ROUTE SYSTEM (FIXED)
-============================== */
+/* ROUTER */
 function route(){
+    let path = window.location.pathname.replace(/^\/+|\/+$/g, "");
 
-    let path = window.location.pathname
-        .replace(/^\/+|\/+$/g, "")   // remove all slashes
-        .toLowerCase();
-
-    // DEFAULT PAGE
     if(path === "" || path === "index.html"){
         showSection("about");
         return;
     }
 
-    // VALID ROUTES CHECK
-    const validPages = [
-        "about",
-        "contact",
-        "faq",
-        "terms",
-        "privacy",
-        "refund"
-    ];
-
-    if(validPages.includes(path)){
-        showSection(path);
-    } else {
-        showSection("about"); // fallback
-    }
+    showSection(path);
 }
 
-/* ==============================
-   LINK HANDLER
-============================== */
+/* CLICK HANDLER */
 document.querySelectorAll("a[href^='/']").forEach(link => {
     link.addEventListener("click", function(e){
         e.preventDefault();
 
-        let path = this.getAttribute("href")
-            .replace(/^\/+|\/+$/g, "")
-            .toLowerCase();
+        let path = this.getAttribute("href").replace("/", "");
 
         window.history.pushState({}, "", "/" + path);
         showSection(path);
     });
 });
 
-/* ==============================
-   MOBILE MENU
-============================== */
-function toggleMenu(){
-    document.getElementById('nav-links')?.classList.toggle('show');
-}
-
-/* ==============================
-   INIT
-============================== */
+/* INIT */
 window.addEventListener("DOMContentLoaded", route);
 
-/* ==============================
-   BACK BUTTON FIX
-============================== */
+/* BACK BUTTON */
 window.addEventListener("popstate", route);
+
+/* MOBILE MENU */
+function toggleMenu(){
+    document.getElementById('nav-links').classList.toggle('show');
+}
 </script>
 </body>
 </html>
