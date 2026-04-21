@@ -632,9 +632,9 @@ function showSection(page){
    ROUTER (URL → PAGE)
 ========================= */
 function route(){
-    let path = window.location.pathname.replace(/^\/+|\/+$/g, "");
+    let path = window.location.pathname
+        .replace(/^\/+|\/+$/g, "");
 
-    // default page
     if(path === "" || path === "index.html"){
         showSection("about");
         return;
@@ -644,7 +644,7 @@ function route(){
 }
 
 /* =========================
-   CLICK LINKS (IMPORTANT FIX)
+   NAVIGATION CLICK FIX
 ========================= */
 document.addEventListener("click", function(e){
 
@@ -657,21 +657,44 @@ document.addEventListener("click", function(e){
     let path = link.getAttribute("href")
         .replace(/^\/+|\/+$/g, "");
 
-    // update URL without reload
     window.history.pushState({}, "", "/" + path);
 
     showSection(path);
 });
 
 /* =========================
-   INIT PAGE LOAD
+   LOAD PAGE (IMPORTANT FIX)
 ========================= */
-window.addEventListener("DOMContentLoaded", route);
+window.addEventListener("DOMContentLoaded", () => {
+
+    const saved = sessionStorage.getItem("redirectPath");
+
+    if(saved){
+        const clean = saved.replace(/^\/+|\/+$/g, "");
+
+        showSection(clean);
+
+        sessionStorage.removeItem("redirectPath");
+
+        history.replaceState(null, "", "/" + clean);
+        return;
+    }
+
+    route();
+});
 
 /* =========================
-   BACK BUTTON FIX
+   BACK BUTTON SUPPORT
 ========================= */
 window.addEventListener("popstate", route);
+
+/* =========================
+   LOGO → HOME
+========================= */
+function goHome(){
+    history.pushState({}, "", "/");
+    showSection("about");
+}
 
 /* =========================
    MOBILE MENU
@@ -679,14 +702,6 @@ window.addEventListener("popstate", route);
 function toggleMenu(){
     document.getElementById('nav-links')
         .classList.toggle('show');
-}
-
-/* =========================
-   LOGO CLICK → HOME
-========================= */
-function goHome(){
-    window.history.pushState({}, "", "/");
-    showSection("about");
 }
 </script>
 </body>
