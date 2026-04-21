@@ -614,7 +614,7 @@ nav ul li a:hover { background:#fff; color:#0077c2; }
 </section>
 <script>
 /* ==============================
-   SHOW SECTION (CORE)
+   SHOW SECTION
 ============================== */
 function showSection(sectionId){
     document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
@@ -628,48 +628,52 @@ function showSection(sectionId){
 }
 
 /* ==============================
-   ROUTER (URL -> SECTION)
+   ROUTE SYSTEM (FIXED)
 ============================== */
 function route(){
-    let path = window.location.pathname.replace(/\/+/g, "").trim();
 
+    let path = window.location.pathname
+        .replace(/^\/+|\/+$/g, "")   // remove all slashes
+        .toLowerCase();
+
+    // DEFAULT PAGE
     if(path === "" || path === "index.html"){
         showSection("about");
         return;
     }
 
-    showSection(path);
+    // VALID ROUTES CHECK
+    const validPages = [
+        "about",
+        "contact",
+        "faq",
+        "terms",
+        "privacy",
+        "refund"
+    ];
+
+    if(validPages.includes(path)){
+        showSection(path);
+    } else {
+        showSection("about"); // fallback
+    }
 }
 
 /* ==============================
-   NAV LINK HANDLER (/about, /contact)
+   LINK HANDLER
 ============================== */
 document.querySelectorAll("a[href^='/']").forEach(link => {
     link.addEventListener("click", function(e){
         e.preventDefault();
 
-        let path = this.getAttribute("href").replace("/", "");
+        let path = this.getAttribute("href")
+            .replace(/^\/+|\/+$/g, "")
+            .toLowerCase();
 
         window.history.pushState({}, "", "/" + path);
         showSection(path);
     });
 });
-
-/* ==============================
-   OPTIONAL: NAVIGATION FUNCTION
-   (if you use onclick="navigateTo()")
-============================== */
-function navigateTo(sectionId){
-    const targetDomain = "company.ethiofly.com";
-    const currentDomain = window.location.hostname;
-
-    if(currentDomain !== targetDomain){
-        window.location.href = `https://${targetDomain}/${sectionId}`;
-    } else {
-        window.history.pushState({}, "", "/" + sectionId);
-        showSection(sectionId);
-    }
-}
 
 /* ==============================
    MOBILE MENU
@@ -679,15 +683,14 @@ function toggleMenu(){
 }
 
 /* ==============================
-   INITIAL LOAD
+   INIT
 ============================== */
 window.addEventListener("DOMContentLoaded", route);
 
 /* ==============================
-   BACK / FORWARD BUTTON SUPPORT
+   BACK BUTTON FIX
 ============================== */
 window.addEventListener("popstate", route);
-</script>
 </script>
 </body>
 </html>
